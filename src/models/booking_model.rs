@@ -3,7 +3,7 @@ use std::time::SystemTime;
 use mongodb::bson::{oid::ObjectId, DateTime};
 use serde::{Deserialize, Serialize};
 
-use crate::models::owner_model::Owner;
+use crate::models::{dog_model::Dog, owner_model::Owner};
 
 use utoipa::ToSchema;
 
@@ -33,7 +33,7 @@ pub struct FullBooking {
     #[schema(value_type = String)]
     pub _id: ObjectId,
     pub owner: Owner,
-    pub dogs: Vec<String>,
+    pub dogs: Vec<Dog>,
     #[schema(value_type = String)]
     pub start_time: DateTime,
     pub duration_inminutes: u8,

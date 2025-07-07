@@ -1,6 +1,6 @@
 use actix_web::{get, post, put, web::{Data, Json, Path}, HttpResponse};
 
-use crate::{models::booking_model::{Booking, BookingRequest}, services::db::Database};
+use crate::{models::booking_model::{Booking, BookingRequest}, util::db::Database};
 
 #[utoipa::path(
     post,
@@ -15,6 +15,7 @@ use crate::{models::booking_model::{Booking, BookingRequest}, services::db::Data
 #[post("/booking")]
 pub async fn create_booking(db: Data<Database>, request: Json<BookingRequest>) -> HttpResponse {
     match db
+        .booking
         .create_booking(
             Booking::try_from(BookingRequest {
                 owner: request.owner.clone(),
@@ -43,7 +44,7 @@ pub async fn create_booking(db: Data<Database>, request: Json<BookingRequest>) -
 )]
 #[get("/bookings")]
 pub async fn get_bookings(db: Data<Database>) -> HttpResponse{
-    match db.get_bookings().await{
+    match db.booking.get_bookings().await {
         Ok(booking) => HttpResponse::Ok().json(booking),
         Err(err) => HttpResponse::InternalServerError().body(err.to_string())
     }
@@ -65,7 +66,7 @@ pub async fn get_bookings(db: Data<Database>) -> HttpResponse{
 pub async fn cancel_booking(db: Data<Database>, path: Path<String>) -> HttpResponse {
     let id = path.into_inner(); // Extract the ID from the path
 
-    match db.cancel_booking(&id).await {
+    match db.booking.cancel_booking(&id).await {
         Ok(_) => HttpResponse::Ok().body("Booking cancelled successfully"),
         Err(e) => {
             eprintln!("Error cancelling booking: {}", e);

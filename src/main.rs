@@ -4,6 +4,7 @@ use utoipa_swagger_ui::SwaggerUi;
 mod models;
 mod services;
 mod routes;
+mod util;
 
 use actix_web::{web::Data, App, HttpServer};
 
@@ -44,7 +45,7 @@ async fn main() -> std::io::Result<()> {
 struct ApiDoc;
 
     // Initialize the database connection
-    let db = services::db::Database::init().await;
+    let db = util::db::Database::init().await;
     let db_data = Data::new(db);
 
     HttpServer::new(

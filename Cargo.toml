@@ -9,5 +9,5 @@ chrono = { version = "0.4.31", features = ["serde"] }
 futures-util = "0.3.31"
 mongodb = "3.2.4"
 serde = { version = "1.0.188", features = ["derive"] }
-utoipa = { version = "4", features = ["actix_extras"] }
-utoipa-swagger-ui = { version = "4", features = ["actix-web"] }
+utoipa = { version = "5.4.0", features = ["actix_extras"] }
+utoipa-swagger-ui = { version = "9.0.2", features = ["actix-web"] }

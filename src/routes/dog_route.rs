@@ -1,6 +1,6 @@
 use actix_web::{post, web::{Data, Json}, HttpResponse};
 
-use crate::{models::dog_model::{Dog, DogRequest}, services::db::Database};
+use crate::{models::dog_model::{Dog, DogRequest}, util::db::Database};
 
 #[utoipa::path(
     post,
@@ -15,6 +15,7 @@ use crate::{models::dog_model::{Dog, DogRequest}, services::db::Database};
 #[post("/dog")]
 pub async fn create_dog(db: Data<Database>, request: Json<DogRequest>) -> HttpResponse {
     match db
+        .dog
         .create_dog(
             Dog::try_from(DogRequest {
                 owner: request.owner.clone(),
