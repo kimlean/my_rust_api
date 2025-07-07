@@ -10,7 +10,8 @@ use actix_web::{web::Data, App, HttpServer};
 use crate::routes::{
     booking_route::{cancel_booking, create_booking, get_bookings}, 
     dog_route::create_dog, 
-    owner_route::create_owner
+    owner_route::create_owner,
+    health_route::health_check
 };
 
 #[actix_web::main]
@@ -54,6 +55,7 @@ struct ApiDoc;
         .service(create_owner)
         .service(get_bookings)
         .service(cancel_booking)
+        .service(health_check)
         .service(
             SwaggerUi::new("/swagger-ui/{_:.*}").url("/api-docs/openapi.json", ApiDoc::openapi()),
         )
